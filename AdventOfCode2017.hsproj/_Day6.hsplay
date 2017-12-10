@@ -1,0 +1,19 @@
+-- Haskell Playground 1.0
+
+input <- fmap readInts $ readFile "day6.txt"
+input
+
+let b = makeBanks input
+b
+
+fullestBank (makeBanks [3,0,1,3,1])
+
+reallocate $ reallocate (makeBanks [0,2,7,0])
+
+cycleReallocate (makeBanks [0,2,7,0])
+cycleReallocate b
+
+-- Part 2
+
+countReallocate (makeBanks [0,2,7,0])
+countReallocate b
