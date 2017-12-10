@@ -5,12 +5,13 @@ build-type: Simple
 license: AllRightsReserved
 stability: experimental
 data-files:
-    day2.txt
     day7.txt
-    day8.txt
-    day4.txt
-    day6.txt
     day5.txt
+    day6.txt
+    day8.txt
+    day9.txt
+    day4.txt
+    day2.txt
 x-ghc-framework-version: 8.0.2-8.9-3
 x-last-ide-version: HfM1.5.1
 Executable AdventOfCode2017
@@ -28,6 +29,7 @@ Executable AdventOfCode2017
       Day8
       Day6
       Day7
+      Day9
       Day4
       Day2
       Day5

@@ -1,0 +1,37 @@
+-- Haskell Playground 1.0
+
+input <- readFile "day9.txt"
+
+-- part 1
+
+parseStream "{}"
+parseStream "{{{}}}"
+parseStream "{{},{}}"
+parseStream "{{{},{},{{}}}}"
+parseStream "{<a>,<a>,<a>,<a>}"
+parseStream "{{<ab>},{<ab>},{<ab>},{<ab>}}"
+parseStream "{{<!!>},{<!!>},{<!!>},{<!!>}}"
+parseStream "{{<a!>},{<a!>},{<a!>},{<ab>}}"
+
+run (score 1) "{}" == Right 1
+run (score 1) "{{{}}}" == Right 6
+run (score 1) "{{},{}}" == Right 5
+run (score 1) "{{{},{},{{}}}}" == Right 16
+run (score 1) "{<a>,<a>,<a>,<a>}" == Right 1
+run (score 1) "{{<ab>},{<ab>},{<ab>},{<ab>}}" == Right 9
+run (score 1) "{{<!!>},{<!!>},{<!!>},{<!!>}}" == Right 9
+run (score 1) "{{<a!>},{<a!>},{<a!>},{<ab>}}" == Right 3
+
+run (score 1) input
+
+-- part 2
+
+run countGarbage "{<>}"
+run countGarbage "{<random characters>}"
+run countGarbage "{<<<<>}"
+run countGarbage "{<{!>}>}"
+run countGarbage "{<!!>}"
+run countGarbage "{<!!!>>}"
+run countGarbage "{<{o\"i!a,<{i<a>}"
+
+run countGarbage input
