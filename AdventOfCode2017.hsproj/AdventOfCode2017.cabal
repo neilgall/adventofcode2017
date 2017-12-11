@@ -6,12 +6,13 @@ license: AllRightsReserved
 stability: experimental
 data-files:
     day7.txt
-    day5.txt
+    day2.txt
     day6.txt
     day8.txt
+    day11.txt
     day9.txt
     day4.txt
-    day2.txt
+    day5.txt
 x-ghc-framework-version: 8.0.2-8.9-3
 x-last-ide-version: HfM1.5.1
 Executable AdventOfCode2017
@@ -30,8 +31,9 @@ Executable AdventOfCode2017
       Day8
       Day6
       Day7
-      Day9
+      Day11
       Day4
+      Day9
       Day10
       Day2
       Day3

@@ -1,0 +1,13 @@
+-- Haskell Playground 1.0
+
+inputData <- readFile "day11.txt"
+
+input = parseData inputData
+
+away [NE,NE,NE]
+away [NE,NE,SW,SW]
+away [NE,NE,S,S]
+away [SE,SW,SE,SW,SW]
+
+away input
+fu
