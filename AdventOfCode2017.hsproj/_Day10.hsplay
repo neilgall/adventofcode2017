@@ -1,0 +1,23 @@
+-- Haskell Playground 1.0
+-- part 1
+
+testdata = [0..4]
+testlengths = [3,4,1,5]
+
+twists testdata testlengths
+
+input = [106,118,236,1,130,0,235,254,59,205,2,87,129,25,255,118]
+
+headProduct $ twists [0..255] input
+
+-- part 2
+
+input2 = "106,118,236,1,130,0,235,254,59,205,2,87,129,25,255,118"
+
+hash ""
+hash "" == "a2582a3a0e66e6e86e3812dcb672a272"
+hash "AoC 2017" == "33efeb34ea91902bb2f59c9920caa6cd"
+hash "1,2,3" == "3efbe78a8d82f29979031a4aa0b16a9d"
+hash "1,2,4" == "63960835bcdc130f0b66d7ff4f6a5a8e"
+
+hash input2
