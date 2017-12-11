@@ -1,7 +1,7 @@
 module Day11 where
   
 import Data.Char
-import Data.List (inits)
+import Data.List (inits, foldl')
 import Data.List.Split (splitOn)
 
 data Dir = N | NE | SE | S | SW | NW deriving (Read, Show)
@@ -24,7 +24,7 @@ step (n, ne) SW = (n,   ne-1)
 step (n, ne) NW = (n+1, ne-1)
 
 follow :: Pos -> [Dir] -> Pos
-follow = foldl step
+follow = foldl' step
 
 distance :: Pos -> Int
 distance (n, ne)
