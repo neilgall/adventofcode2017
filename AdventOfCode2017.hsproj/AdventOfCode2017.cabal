@@ -5,11 +5,12 @@ build-type: Simple
 license: AllRightsReserved
 stability: experimental
 data-files:
-    day7.txt
     day2.txt
+    day7.txt
     day6.txt
-    day8.txt
+    day12.txt
     day11.txt
+    day8.txt
     day9.txt
     day4.txt
     day5.txt
@@ -31,6 +32,7 @@ Executable AdventOfCode2017
       Day8
       Day6
       Day7
+      Day12
       Day11
       Day4
       Day9

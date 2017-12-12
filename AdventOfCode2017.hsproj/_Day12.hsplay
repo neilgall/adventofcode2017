@@ -1,0 +1,24 @@
+-- Haskell Playground 1.0
+import Data.Either
+
+testData = "0 <-> 2\n1 <-> 1\n2 <-> 0, 3, 4\n3 <-> 2, 4\n4 <-> 2, 3, 6\n5 <-> 6\n6 <-> 4, 5"
+
+parse1 x = head $ rights [parse parseInput "" x]
+
+testGraph = parse1 testData
+
+testGraph
+
+connections testGraph 0
+
+-- Part 1
+
+inputData <- readFile "day12.txt"
+inputGraph = parse1 inputData
+
+length $ connections inputGraph 0
+
+-- Part 2
+
+groups testGraph
+length $ groups inputGraph
