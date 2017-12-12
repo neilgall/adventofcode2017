@@ -43,6 +43,5 @@ groups graph =
     firstGroup = connections graph (head $ Map.keys graph)
     remainingGraph = Set.foldr' Map.delete graph firstGroup
   in
-    if noMoreGr then Set.empty
+    if noMoreGroups then Set.empty
     else Set.insert firstGroup (groups remainingGraph)
-
