@@ -1,0 +1,29 @@
+-- Haskell Playground 1.0
+import Data.Either
+
+inputData <- readFile "day16.txt"
+inputMoves = head $! rights [parse parseMoves "" inputData]
+Prelude.length inputMoves
+
+testData = "s1,x3/4,pe/b"
+testMoves = head $! rights [parse parseMoves "" testData]
+
+testStart = start 'a' 'e'
+inputStart = start 'a' 'p'
+
+-- Part 1
+
+move testStart (Spin 3)
+move testStart (Exchange 3 4)
+move testStart (Partner 'e' 'b')
+
+dance testStart testMoves
+dance inputStart inputMoves
+
+
+-- Part 2
+findCycleLength testStart testMoves
+dance testStart (concat $ replicate 8 testMoves)
+optimalDances 20 testStart testMoves
+
+optimalDances 1000000000 inputStart inputMoves
