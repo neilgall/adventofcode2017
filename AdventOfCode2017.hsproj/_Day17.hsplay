@@ -1,0 +1,20 @@
+-- Haskell Playground 1.0
+
+-- Part 1
+
+test = insertions 1 9 3 initial
+
+toList test
+
+test2 = insertions 1 2017 3 initial
+toList test2
+findAfter test2 2017
+
+input = insertions 1 2017 301 initial
+findAfter input 2017
+toList input
+
+-- Part 2
+
+input2 = insertions 1 5000 301 initial
+findAfter input2 0
