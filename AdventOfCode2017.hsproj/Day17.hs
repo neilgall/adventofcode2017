@@ -1,46 +1,41 @@
-module Da where
+module Day17 where
 
+import qualified Data.Vector.Unboxed as V
 import Data.List (intersperse, elemIndex)
 import Data.Maybe (fromJust)
-import System.Environment (getArgs)
 
 -- Part 1
   
-type Spinlock = ([Int], [Int])
+type Spinlock = (V.Vector Int, Int)
 
 initial :: Spinlock
-initial = ([0], [])
+initial = (V.fromList [0], 0)
 
 insert :: Int -> Spinlock -> Spinlock
-insert n (before, after) = (n:before, after) 
-
-step :: Spinlock -> Spinlock
-step (bs, []) = ([head (reverse bs)], tail (reverse bs))
-step (bs, a:as) = (a:bs, as)
+insert n (xs, p) = (xs', p')
+  where
+    (before, after) = V.splitAt p xs
+    xs' = V.concat [before, V.singleton n, after]
+    p' = p+1
 
 stepN :: Int -> Spinlock -> Spinlock
-stepN 0 s = s
-stepN n s = stepN (n-1) (step s)
+stepN n (xs, p) = (xs, (p + n) `mod` V.length xs)
 
 insertions :: Int -> Int -> Int -> Spinlock -> Spinlock
 insertions n limit steps s 
   | n > limit = s
-  | otherwise = insertions (n+1) limit steps $ insert n (stepN steps s)
+  | otherwise = insertions (n+1) limit steps $! insert n (stepN steps s)
   
 toList :: Spinlock -> String
-toList (before, after) = 
-  let
-    bs = map show $ reverse $ tail before
-    pos = "**" ++ show (head before) ++ "**"
-    as = map show after
-    all = bs ++ pos:as
-  in
-    "[" ++ concat (intersperse "," all) ++ "]" 
+toList (xs, p) = show before ++ "**" ++ show after
+  where
+    (before, after) = V.splitAt p xs
 
 -- Part 2
 
-findAfter :: Spinlock -> Int -> Int
-findAfter (before, after) n =
-  case elemIndex n before of
-    Just i -> if i == 0 then head after else before !! (i - 1)    
-    Nothing -> after !! (fromJust (elemIndex n after) + 1)
+findAfter :: Spinlock -> Int -> Maybe Int
+findAfter (xs, _) n = fmap getNext index
+  where
+    index = V.elemIndex n xs
+    nextIndex n = (n + 1) `mod` V.length xs
+    getNext n = xs V.! (nextIndex n)
