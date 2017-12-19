@@ -5,18 +5,19 @@ build-type: Simple
 license: AllRightsReserved
 stability: experimental
 data-files:
-    day5.txt
+    day9.txt
+    day11.txt
+    day2.txt
     day7.txt
     day16.txt
     day18.txt
     day13.txt
+    day19.txt
     day6.txt
     day12.txt
-    day11.txt
     day8.txt
-    day9.txt
     day4.txt
-    day2.txt
+    day5.txt
 x-ghc-framework-version: 8.0.2-8.9-3
 x-last-ide-version: HfM1.5.1
 Executable AdventOfCode2017
@@ -34,6 +35,7 @@ Executable AdventOfCode2017
   default-language: Haskell2010
   other-modules:
       Day5
+      Day19
       Day16
       Day12
       Day11
