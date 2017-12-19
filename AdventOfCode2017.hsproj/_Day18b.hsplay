@@ -1,0 +1,15 @@
+-- Haskell Playground 1.0
+
+sendTest = "snd 1\nsnd2\nsnd p\nrcv a\nrcv b\nrcv c\nrcv d"
+
+sendCPU = load 2 (parseProgram sendTest)
+execState runCPU sendCPU
+
+inputData <- readFile "day18.txt"
+inputProgram = parseProgram inputData
+
+cpu = load 2 inputProgram
+
+r = execState runCPU cpu
+r ^.. cores . traverse . registers
+r ^.. cores . traverse . sentCount
