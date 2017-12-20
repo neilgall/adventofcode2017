@@ -1,0 +1,8 @@
+-- Haskell Playground 1.0
+
+test = insertions 1 9 3 initial
+toList test
+
+input = insertions 1 2017 301 initial
+findAfter input 2017
+

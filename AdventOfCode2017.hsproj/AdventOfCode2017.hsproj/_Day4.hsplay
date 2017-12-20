@@ -1,0 +1,6 @@
+-- Haskell Playground 1.0
+
+input <- fmap lines $ readFile "day4.txt"
+
+length $ filter (valid policy1) input
+length $ filter (valid policy2) input

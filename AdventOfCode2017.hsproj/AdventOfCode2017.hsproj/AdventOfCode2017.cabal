@@ -5,7 +5,6 @@ build-type: Simple
 license: AllRightsReserved
 stability: experimental
 data-files:
-    day20.txt
     day9.txt
     day11.txt
     day2.txt

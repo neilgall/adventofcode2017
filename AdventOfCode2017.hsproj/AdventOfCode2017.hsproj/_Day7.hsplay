@@ -1,0 +1,24 @@
+-- Haskell Playground 1.0
+import Data.Either
+
+t = "pbga (66)\nxhth (57)\nebii (61)\nhavc (66)\nktlj (57)\nfwft (72) -> ktlj, cntj, xhth\nqoyq (66)\npadx (45) -> pbga, havc, qoyq\ntknk (41) -> ugml, padx, fwft\njptl (61)\nugml (68) -> gyxo, ebii, jptl\ngyxo (61)\ncntj (57)"
+
+testdata = rights $ map (parse rawInput "") (lines t)
+testtower = tower testdata
+
+input <- readFile "day7.txt"
+inputdata = rights $ map (parse rawInput "") (lines input)
+inputtower = tower inputdata
+
+flatten testtower
+balanceError testtower
+
+flatten $ fst $ balanceError testtower
+
+children (Tower _ _ cs) = cs
+testcs = children testtower
+
+oddOneOut (==) $ map weight testcs
+filter (\t -> weight t == 251) testcs
+
+balanceError inputtower

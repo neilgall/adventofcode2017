@@ -1,0 +1,14 @@
+-- Haskell Playground 1.0
+
+d <- fmap parseData $ readFile "day2.txt"
+
+-- Part 1
+checksum rowChecksum1 $ parseData "5 1 9 5\n7 5 3\n2 4 6 8"
+
+checksum rowChecksum1 d
+
+
+-- Part 2
+checksum rowChecksum2 $ parseData "5 9 2 8\n9 4 7 3\n3 8 6 5"
+
+checksum rowChecksum2 d

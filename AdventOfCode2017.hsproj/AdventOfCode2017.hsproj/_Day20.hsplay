@@ -1,0 +1,3 @@
+-- Haskell Playground 1.0
+
+input <- load "day20.txt"

@@ -1,0 +1,17 @@
+-- Haskell Playground 1.0
+-- Part 1
+
+testKey = "flqrgnkx"
+--countGrid testKey
+
+inputKey = "hxtvlmkl"
+--countGrid inputKey
+
+-- Part 2
+
+disk = mkDisk $ hashGrid in
+allocated = allocateGroups disk
+countGroups allocated
+
+showCorner allocated
+

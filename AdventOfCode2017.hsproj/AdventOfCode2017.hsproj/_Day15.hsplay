@@ -1,0 +1,21 @@
+-- Haskell Playground 1.0
+
+testGenA = Generator 16807 65
+testGenB = Generator 48271 8921
+iterations = 40000000
+
+--judge $ pairs iterations testGenA testGenB
+
+-- Part 1
+
+genA = Generator 16807 512
+genB = Generator 48271 191
+-- judge $ pairs iterations genA genB
+
+-- Part 2
+iterations2 = 5000000
+
+--judge $ pickyPairs iterations2 testGenA testGenB
+
+judge $ pickyPairs iterations2 genA genB
+
