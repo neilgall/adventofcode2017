@@ -1,5 +1,5 @@
 {-# LANGUAGE BangPatterns, DeriveFunctor #-}
-module Main where
+module Day20 where
 
 import Data.Either (rights)
 import Data.List (minimum, elemIndex, (\\))
