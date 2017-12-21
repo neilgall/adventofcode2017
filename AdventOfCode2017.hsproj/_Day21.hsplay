@@ -1,0 +1,18 @@
+-- Haskell Playground 1.0
+
+testData = "../.# => ##./#../...\n.#./..#/### => #..#/..../..../#..#"
+parsed = head . rights . pure $ parse parseInput "" testData
+testPatterns = addMissing parsed
+
+e = expandN 2 testPatterns initial
+countOn e
+
+-- Part 1
+
+rawPatterns <- load "day21.txt"
+patterns = addMissing rawPatterns
+
+expanded = expand patterns initial
+countOn expanded
+
+M.lookup initial patterns
