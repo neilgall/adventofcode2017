@@ -1,0 +1,1 @@
+../AdventOfCode2017.hsproj/day22.txt
