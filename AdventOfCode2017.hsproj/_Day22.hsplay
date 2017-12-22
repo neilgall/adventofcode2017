@@ -1,0 +1,26 @@
+-- Haskell Playground 1.0
+
+testData = "..#\n#..\n..."
+testInput = load testData
+
+initial testInput
+
+
+execState (burstN 1) (initial testInput)
+
+
+
+execState (burstN 70) (initial testInput)
+
+
+
+execState (burstN 10000) (initial testInput)
+
+
+-- part 1
+
+inputData <- readFile "day22.txt"
+input = load inputData
+
+execState bur (initial input)
+
