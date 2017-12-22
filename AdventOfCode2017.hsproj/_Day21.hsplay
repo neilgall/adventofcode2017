@@ -2,7 +2,7 @@
 
 testData = "../.# => ##./#../...\n.#./..#/### => #..#/..../..../#..#"
 parsed = head . rights . pure $ parse parseInput "" testData
-testPatterns = addMissing parsed
+testPatterns = extendPatternKeys parsed
 
 e = expandN 2 testPatterns initial
 countOn e
@@ -10,9 +10,9 @@ countOn e
 -- Part 1
 
 rawPatterns <- load "day21.txt"
-patterns = addMissing rawPatterns
-
-expanded = expand patterns initial
-countOn expanded
-
+patterns = extendPatternKeys rawPatterns
+length patterns
 M.lookup initial patterns
+
+expanded = expandN 18 patterns initial
+countOn expanded

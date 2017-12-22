@@ -22,7 +22,7 @@ instance (Ord a) => Ord (Mx.Matrix a) where
 load :: String -> IO (Patterns Char)
 load f = do
     content <- readFile f
-    return . head . rights .pure $ parse parseInput f content
+    return . head . rights . pure $ parse parseInput f content
 
 parseInput :: GenParser Char st (Patterns Char)
 parseInput = M.fromList <$> parsePattern `sepEndBy` endOfLine
@@ -50,11 +50,16 @@ rotateL = Mx.transpose . flipH
 rotateR :: Square a -> Square a
 rotateR = Mx.transpose . flipV
 
-addMissing :: (Ord a, Eq a) => Patterns a -> Patterns a
-addMissing = M.fromList . concat . map addMissing' . M.toList
+rotate180 :: Square a -> Square a
+rotate180 = rotateR . rotateR
+
+extendPatternKeys :: (Ord a, Eq a) => Patterns a -> Patterns a
+extendPatternKeys = M.fromList . concat . map addKeys . M.toList
   where
-    transforms = [id, flipH, flipV, rotateL, rotateR, rotateR . rotateR]
-    addMissing' (x,y) = map (,y) . nub . sequence transforms $ x
+    flips = [id, flipH, flipV]
+    rotates = [id, rotateR, rotateL, rotate180]
+    transforms = [f . r | f <- flips, r <- rotates]
+    addKeys (x,y) = map (,y) . nub . sequence transforms $ x
     
 -- Part 1 
 
@@ -99,11 +104,9 @@ assemble n blocks =
     Mx.fromLists . concat $ map assembleRow rows
     
 assembleRow :: [Image] -> [[Char]]
-assembleRow [] = []
-assembleRow (i:[]) = Mx.toLists i
-assembleRow (i:is) = map join $ zip (Mx.toLists i) (assembleRow is)
+assembleRow = foldl1 join . map Mx.toLists
   where
-    join (a,b) = a ++ b
+    join a b = map (uncurry (++)) $ zip a b
 
 countOn :: Image -> Int
 countOn = length . filter (== '#') . concat . Mx.toLists
