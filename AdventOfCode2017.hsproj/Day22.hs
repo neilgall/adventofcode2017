@@ -2,15 +2,18 @@ module Day22 where
   
 import Prelude hiding (Left, Right)
 import Control.Monad.State
-import qualified Data.Matrix as M
+import qualified Data.Map.Strict as M
+import qualified Data.Matrix as Mx
 import Data.Tuple (swap)
 
-data Node = Clean | Infected deriving (Eq)
+data Node = Clean | Weakened | Infected | Flagged deriving (Eq)
 data Direction = Up | Right | Down | Left deriving (Eq, Show)
 
 instance Show Node where
   show Clean = "."
   show Infected = "#"
+  show Weakened = "W"
+  show Flagged = "F"
 
 turnRight :: Direction -> Direction
 turnRight Up = Right
@@ -24,8 +27,14 @@ turnLeft Left = Down
 turnLeft Down = Right
 turnLeft Right = Up
 
+turnAround :: Direction -> Direction
+turnAround Up = Down
+turnAround Down = Up
+turnAround Left = Right
+turnAround Right = Left
+
 type Pos = (Int, Int)
-type Grid = M.Matrix Node
+type Grid = M.Map Pos Node
 
 move :: Pos -> Direction -> Pos
 move (x,y) Up    = (x, y-1)
@@ -38,48 +47,28 @@ toNode '.' = Clean
 toNode '#' = Infected
 
 load :: String -> Grid
-load = M.fromLists . (map . map) toNode . lines
+load s = toMap
+  where
+    mx = Mx.fromLists . (map . map) toNode . lines $ s
+    rows = Mx.nrows mx
+    cols = Mx.ncols mx
+    toMap = M.fromList [((x,y), mx Mx.! (y,x)) | x <- [1..cols], y <- [1..rows]]
 
 centre :: Grid -> Pos
-centre g = (c (M.ncols g), c (M.nrows g))
+centre g = (c width, c height)
   where
-    c i = i `div` 2 + 1
-
-emptyRow :: Grid -> Grid
-emptyRow g = M.fromLists [replicate (M.ncols g) Clean]
-
-emptyCol :: Grid -> Grid
-emptyCol g = M.fromLists $ replicate (M.nrows g) [Clean]
-
-growOnTop :: Grid -> Grid
-growOnTop g = emptyRow g M.<-> g
-
-growOnBottom :: Grid -> Grid
-growOnBottom g = g M.<-> emptyRow g
-    
-growOnLeft :: Grid -> Grid
-growOnLeft g = emptyCol g M.<|> g
-
-growOnRight :: Grid -> Grid
-growOnRight g = g M.<|> emptyCol g
-
-growGrid :: Grid -> Pos -> (Grid, Pos)
-growGrid g p@(x,y) 
-  | x <= 0 = (growOnLeft g, (x+1, y))
-  | y <= 0 = (growOnTop g, (x, y+1))
-  | x > (M.ncols g) = (growOnRight g, p)
-  | y > (M.nrows g) = (growOnBottom g, p)
-  | otherwise = (g, p)
+    (width, height) = maximum (M.keys g)
+    c n = n `div` 2  + 1
 
 data VirusCarrier = VirusCarrier {
-  _grid :: Grid,
-  _pos :: Pos,
-  _dir :: Direction,
-  _infections :: Int
+  _grid :: !Grid,
+  _pos :: !Pos,
+  _dir :: !Direction,
+  _infections :: !Int
 } deriving (Show)
 
 currentNode :: VirusCarrier -> Node
-currentNode vc = (_grid vc) M.! (swap $ _pos vc)
+currentNode vc = M.findWithDefault Clean (_pos vc) (_grid vc)
 
 countInfection :: VirusCarrier -> VirusCarrier
 countInfection vc = vc { _infections = 1 + (_infections vc) }
@@ -87,21 +76,29 @@ countInfection vc = vc { _infections = 1 + (_infections vc) }
 initial :: Grid -> VirusCarrier
 initial g = VirusCarrier { _grid = g, _pos = centre g, _dir = Up, _infections = 0 }
 
-burst :: State VirusCarrier ()
-burst = do
+burst1 :: State VirusCarrier ()
+burst1 = do
   node <- gets currentNode 
   case node of
-    Clean -> burst' Infected turnLeft >> modify countInfection
-    Infected -> burst' Clean turnRight
+     Clean -> burst' Infected turnLeft >> modify countInfection
+     Infected -> burst' Clean turnRight
+
+burst2 :: State VirusCarrier ()
+burst2 = do
+  node <- gets currentNode 
+  case node of
+    Clean -> burst' Weakened turnLeft
+    Weakened -> burst' Infected id >> modify countInfection
+    Infected -> burst' Flagged turnRight
+    Flagged -> burst' Clean turnAround
 
 burst' :: Node -> (Direction -> Direction) -> State VirusCarrier ()
 burst' node turn = do
   newDir  <- gets $ turn . _dir
   pos     <- gets _pos
-  setNode <- gets $ (M.setElem node (swap pos)) . _grid
-  let (newGrid, newPos) = growGrid setNode (move pos newDir)
-  modify $ \vc -> vc { _grid = newGrid, _pos = newPos, _dir = newDir }
+  newGrid <- gets $ (M.insert pos node) . _grid
+  modify $ \vc -> vc { _grid = newGrid, _pos = (move pos newDir), _dir = newDir }
   
-burstN :: Int -> State VirusCarrier ()
-burstN 0 = return ()
-burstN n = burst >> burstN (n-1)
+doN :: State s () -> Int -> State s ()
+doN _ 0 = return ()
+doN f n = f >> doN f (n-1)
