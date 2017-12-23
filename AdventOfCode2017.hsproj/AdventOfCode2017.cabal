@@ -9,6 +9,7 @@ data-files:
     day20.txt
     day9.txt
     day11.txt
+    day23.txt
     day2.txt
     day7.txt
     day16.txt
@@ -37,26 +38,27 @@ Executable AdventOfCode2017
       containers -any
   default-language: Haskell2010
   other-modules:
-      Day20
-      Day5
-      Day19
       Day16
-      Day12
-      Day11
-      Day15
       Day17b
+      Day11
       Day22
-      Day14
-      Day4
-      Day2
       Day8
       Day18b
-      Day6
-      Day21
-      Day18
-      Day7
       Day9
       Day13
       Day10
       Day17
+      Day5
+      Day20
+      Day19
+      Day23
+      Day12
+      Day15
+      Day4
+      Day14
+      Day2
+      Day6
+      Day21
+      Day18
+      Day7
       Day3
