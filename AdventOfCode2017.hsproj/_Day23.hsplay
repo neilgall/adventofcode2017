@@ -2,6 +2,14 @@
 
 -- part 1
 
-cpu <- load "day23.txt"
+cpu <- load "day23.txt" 0
 execState runCPU cpu
 
+-- part 2
+
+cpu2 <- load "day23b.txt" 1
+cpu2
+execState runCPU cpu2
+
+range
+length $ filter (not . isPrime) range
