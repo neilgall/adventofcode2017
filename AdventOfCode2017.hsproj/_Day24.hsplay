@@ -5,7 +5,7 @@ testComponents = parse testData
 
 bs = bridge 0 testComponents
 maximumBy (feature strength) bs
-maximumBy (feature stength) bs
+maximumBy (feature length) bs
 
 -- Part 1
 
