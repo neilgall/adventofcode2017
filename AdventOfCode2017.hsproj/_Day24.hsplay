@@ -1,5 +1,7 @@
 -- Haskell Playground 1.0
 
+import Data.Foldable (maximumBy)
+
 testData = "0/2\n2/2\n2/3\n3/4\n3/5\n0/1\n10/1\n9/10"
 testComponents = parse testData
 

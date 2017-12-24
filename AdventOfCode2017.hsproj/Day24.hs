@@ -1,6 +1,5 @@
 module Day24 where
 
-import Data.Foldable (maximumBy)
 import Data.List.Split (splitOn)
 
 type Component = (Int, Int)
@@ -21,9 +20,9 @@ unused :: Int -> Component -> Int
 unused n (x,y) = if n == x then y else x
 
 bridge :: Int -> [Component] -> [Bridge]
-bridge start cs = do
-  next <- connect start cs
-  rest <- [] : bridge (unused start next) (remove next cs)
+bridge port cs = do
+  next <- connect port cs
+  rest <- [] : bridge (unused port next) (remove next cs)
   return $ next:rest
 
 feature :: (Ord a) => (Bridge -> a) -> Bridge -> Bridge -> Ordering
