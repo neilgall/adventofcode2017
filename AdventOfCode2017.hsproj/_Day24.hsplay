@@ -4,12 +4,19 @@ testData = "0/2\n2/2\n2/3\n3/4\n3/5\n0/1\n10/1\n9/10"
 testComponents = parse testData
 
 bs = bridge 0 testComponents
-maximumBy stronger bs
+maximumBy (feature strength) bs
+maximumBy (feature stength) bs
 
 -- Part 1
 
 inputData <- readFile "day24.txt"
 components = parse inputData
+bridges = bridge 0 components
 
-b = maximumBy stronger (bridge 0 components)
-strength b
+part1 = maximumBy (feature strength) bridges
+strength part1
+
+-- Part 2
+
+part2 = maximumBy (feature length) bridges
+strength part2

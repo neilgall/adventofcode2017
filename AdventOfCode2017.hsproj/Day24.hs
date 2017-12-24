@@ -26,8 +26,8 @@ bridge start cs = do
   rest <- [] : bridge (unused start next) (remove next cs)
   return $ next:rest
 
+feature :: (Ord a) => (Bridge -> a) -> Bridge -> Bridge -> Ordering
+feature f b1 b2 = compare (f b1) (f b2)
+
 strength :: Bridge -> Int
 strength = sum . map (uncurry (+))
-
-stronger :: Bridge -> Bridge -> Ordering
-stronger b1 b2 = compare (strength b1) (strength b2)
