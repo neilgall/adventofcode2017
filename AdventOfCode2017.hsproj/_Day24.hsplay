@@ -1,0 +1,15 @@
+-- Haskell Playground 1.0
+
+testData = "0/2\n2/2\n2/3\n3/4\n3/5\n0/1\n10/1\n9/10"
+testComponents = parse testData
+
+bs = bridge 0 testComponents
+maximumBy stronger bs
+
+-- Part 1
+
+inputData <- readFile "day24.txt"
+components = parse inputData
+
+b = maximumBy stronger (bridge 0 components)
+strength b

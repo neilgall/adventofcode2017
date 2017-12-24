@@ -163,3 +163,6 @@ isPrime k = null [x | x <- [2..k-1], k `mod` x == 0]
 b = 93*100 + 100000
 c = b + 17000
 range = [b,b+17..c]
+
+solution :: [Int] -> Int
+solution = length . filter (not . isPrime)

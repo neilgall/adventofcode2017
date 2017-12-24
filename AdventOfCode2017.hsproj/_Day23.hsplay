@@ -11,5 +11,4 @@ cpu2 <- load "day23b.txt" 1
 cpu2
 execState runCPU cpu2
 
-range
-length $ filter (not . isPrime) range
+solution range
