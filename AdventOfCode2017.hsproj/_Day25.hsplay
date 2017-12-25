@@ -1,0 +1,11 @@
+-- Haskell Playground 1.0
+testbp <- load "day25test.txt"
+testbp
+
+newMachine testbp
+checksum $ runBlueprint testbp
+
+-- Part 1
+
+part1 <- load "day25.txt"
+checksum $ runBlueprint part1
